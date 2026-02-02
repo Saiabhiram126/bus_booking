@@ -103,12 +103,14 @@
       <ul class="navbar-nav ms-auto flex-row">
         <li class="nav-item"><a class="nav-link" href="index.html"><strong>Home</strong></a></li>
         <li class="nav-item"><a class="nav-link" href="about_us.html"><strong>About Us</strong></a></li>
-        <li class="nav-item"><a class="nav-link" href="login.html"><strong>Login</strong></a></li>
-        <li class="nav-item">
+        <li id="userNav" class="nav-item" style="display: none;"><a class="nav-link" href="#"><strong id="userName"></strong></a></li>
+        <li id="authNav" class="nav-item"><a class="nav-link" href="login.html"><strong>Login</strong></a></li>
+        <li id="signupNav" class="nav-item">
           <a class="nav-link" href="signup.html" style="color:#ffd700 !important;">
             <strong>Sign Up</strong>
           </a>
         </li>
+        <li id="logoutNav" class="nav-item" style="display: none;"><a class="nav-link" href="#" id="logoutBtn"><strong>Logout</strong></a></li>
       </ul>
     </div>
   </nav>

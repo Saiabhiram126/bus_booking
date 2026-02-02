@@ -153,6 +153,12 @@
   <nav class="navbar navbar-dark fixed-top">
     <div class="container">
       <a class="navbar-brand" href="index.html">🚌 BlueBus</a>
+      <ul class="navbar-nav ms-auto flex-row">
+        <li id="userNav" class="nav-item" style="display: none;"><a class="nav-link" href="#"><strong id="userName"></strong></a></li>
+        <li id="authNav" class="nav-item"><a class="nav-link" href="login.html"><strong>Login</strong></a></li>
+        <li id="signupNav" class="nav-item"><a class="nav-link" href="signup.html" style="color: #ffd700 !important;"><strong>Sign Up</strong></a></li>
+        <li id="logoutNav" class="nav-item" style="display: none;"><a class="nav-link" href="#" id="logoutBtn"><strong>Logout</strong></a></li>
+      </ul>
     </div>
   </nav>
 
@@ -197,6 +203,7 @@
     </div>
   </div>
 
+  <script src="assests/js/main.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const booking = JSON.parse(localStorage.getItem('booking') || 'null');

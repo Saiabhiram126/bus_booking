@@ -1,7 +1,7 @@
 (function () {
 
   // API Configuration
-  const API_URL = '/api';
+  const API_URL = 'https://bus-booking-ory6.onrender.com/api';
 
   // Helper function to get current user
   function getCurrentUser() {

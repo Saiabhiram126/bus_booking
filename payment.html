@@ -200,6 +200,52 @@
     .spinner-border {
       color: #00f5d4;
     }
+
+    .upi-section {
+      display: block;
+      background: rgba(0, 245, 212, 0.05);
+      border: 1px solid rgba(0, 245, 212, 0.3);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .upi-section.hidden {
+      display: none;
+    }
+
+    .upi-qr {
+      width: 220px;
+      max-width: 100%;
+      border-radius: 8px;
+      border: 2px dashed rgba(0, 245, 212, 0.4);
+      padding: 0.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      margin-bottom: 0.8rem;
+    }
+
+    .upi-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      color: #cfcfcf;
+      font-size: 0.9rem;
+    }
+
+    .btn-copy {
+      border: 1px solid rgba(0, 245, 212, 0.5);
+      background: transparent;
+      color: #00f5d4;
+      border-radius: 6px;
+      padding: 0.3rem 0.6rem;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    .btn-copy:hover {
+      background: rgba(0, 245, 212, 0.1);
+    }
   </style>
 </head>
 <body>
@@ -252,6 +298,22 @@
         <button class="method-btn active" onclick="selectMethod('upi')">📱 UPI / Mobile Wallet</button>
         <button class="method-btn" onclick="selectMethod('card')">💳 Debit / Credit Card</button>
         <button class="method-btn" onclick="selectMethod('netbanking')">🏦 Net Banking</button>
+      </div>
+
+      <!-- UPI QR Section (only for UPI method) -->
+      <div id="upiSection" class="upi-section">
+        <img
+          src="assests/images/bank-qr.svg"
+          alt="Scan to pay"
+          class="upi-qr"
+        >
+        <div class="upi-meta">
+          <div>Scan the QR with any UPI app to pay the exact amount.</div>
+          <div>
+            UPI ID: <strong id="upiId">bluebus@upi</strong>
+            <button class="btn-copy" onclick="copyUpiId()">Copy</button>
+          </div>
+        </div>
       </div>
 
       <!-- Card Input (only for card method) -->
@@ -315,10 +377,30 @@
 
       // Show/hide card inputs
       const cardInputs = document.getElementById('cardInputs');
+      const upiSection = document.getElementById('upiSection');
       if (method === 'card') {
         cardInputs.classList.add('active');
       } else {
         cardInputs.classList.remove('active');
+      }
+
+      if (method === 'upi') {
+        upiSection.classList.remove('hidden');
+      } else {
+        upiSection.classList.add('hidden');
+      }
+    }
+
+    function copyUpiId() {
+      const upiId = document.getElementById('upiId').textContent;
+      if (navigator.clipboard?.writeText) {
+        navigator.clipboard.writeText(upiId).then(() => {
+          alert('UPI ID copied');
+        }).catch(() => {
+          alert('Unable to copy. Please copy manually.');
+        });
+      } else {
+        alert('Copy not supported. Please copy manually.');
       }
     }
 
@@ -381,6 +463,9 @@
         
         // Keep the booking data in localStorage
         localStorage.setItem('currentBooking', JSON.stringify(data.booking));
+        const paidBookingId = data.booking.bookingId || data.booking.id || 'paid';
+        localStorage.setItem('paymentStatus', 'paid');
+        localStorage.setItem('paymentStatusBookingId', String(paidBookingId));
         
         // Redirect to confirmation page
         setTimeout(() => {

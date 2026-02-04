@@ -391,6 +391,7 @@
           
           // Save the booking data
           localStorage.setItem('currentBooking', JSON.stringify(data.booking));
+          localStorage.removeItem('paymentStatus');
           localStorage.removeItem('selectedSeats');
           localStorage.removeItem('selectedBus');
 
@@ -424,6 +425,15 @@
           <p>Please start a new booking from the <a href="index.html">home page</a>.</p>
         </div>
       `;
+      return;
+    }
+
+    const paymentStatus = localStorage.getItem('paymentStatus');
+    const paymentStatusBookingId = localStorage.getItem('paymentStatusBookingId');
+    const currentBookingId = booking.bookingId || booking.id;
+    const isPaid = paymentStatus === 'paid' && String(paymentStatusBookingId) === String(currentBookingId);
+    if (!isPaid) {
+      window.location.href = 'payment.html';
       return;
     }
     

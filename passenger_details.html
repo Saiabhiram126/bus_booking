@@ -95,6 +95,10 @@
       passengerList.innerHTML = '<div class="alert alert-danger">Error: Missing booking information. <a href="index.html">Start over</a></div>';
       passengerForm.style.display = 'none';
     } else {
+      // Clear any previous payment state for a new booking flow
+      localStorage.removeItem('paymentStatus');
+      localStorage.removeItem('paymentStatusBookingId');
+
       // Generate input fields for each seat
       seats.forEach((seat) => {
         const div = document.createElement('div');
@@ -183,11 +187,13 @@
           
           // Save the booking data to localStorage
           localStorage.setItem('currentBooking', JSON.stringify(data.booking));
+          localStorage.removeItem('paymentStatus');
+          localStorage.removeItem('paymentStatusBookingId');
           localStorage.removeItem('selectedSeats');
           localStorage.removeItem('selectedBus');
 
-          // Redirect to confirmation page
-          window.location.href = 'confirmation.html';
+          // Redirect to payment page
+          window.location.href = 'payment.html';
         } catch (error) {
           console.error('Booking error:', error);
           alert('Booking failed: ' + error.message);
